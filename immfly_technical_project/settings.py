@@ -20,6 +20,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -42,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'immfly_content_app',
     'django_extensions',
-    'rest_framework'
+    'rest_framework',
+    'django_seed'
 ]
 
 MIDDLEWARE = [
@@ -122,6 +124,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL= '/media/'
+MEDIA_ROOT= BASE_DIR / 'uploads'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

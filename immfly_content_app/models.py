@@ -1,4 +1,5 @@
 from django.db import models
+from .validators import validate_file_extension
 
 class File(models.Model):
     FILE_CHOICES = (
@@ -6,7 +7,7 @@ class File(models.Model):
         ('pdf', 'PDF'),
         ('text', 'Text'),
     )
-    file = models.FileField(upload_to='files/')
+    file = models.FileField(upload_to='files/', validators=[validate_file_extension])
     file_type = models.CharField(max_length=5, choices=FILE_CHOICES)
 
 class Metadata(models.Model):
@@ -28,6 +29,8 @@ class Channel(models.Model):
     image = models.ImageField(upload_to='channel_images/')
     parent_channel = models.ForeignKey('self', on_delete=models.CASCADE, related_name='subchannels', null=True, blank=True)
     group = models.ManyToManyField(Group)
+    contents = models.ManyToManyField(Content, related_name='channels')
+
 
     def get_all_subchannels(self):
         """

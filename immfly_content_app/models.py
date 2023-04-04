@@ -19,6 +19,8 @@ class Content(models.Model):
     file = models.OneToOneField(File, on_delete=models.CASCADE)
     metadata = models.OneToOneField(Metadata, on_delete=models.CASCADE)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='contents')
+
 
 class Group(models.Model):
     name = models.CharField(max_length=50)
@@ -29,7 +31,6 @@ class Channel(models.Model):
     image = models.ImageField(upload_to='channel_images/')
     parent_channel = models.ForeignKey('self', on_delete=models.CASCADE, related_name='subchannels', null=True, blank=True)
     group = models.ManyToManyField(Group)
-    contents = models.ManyToManyField(Content, related_name='channels')
 
 
     def get_all_subchannels(self):

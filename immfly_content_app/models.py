@@ -27,7 +27,7 @@ class Channel(models.Model):
     language = models.CharField(max_length=50)
     image = models.ImageField(upload_to='channel_images/')
     parent_channel = models.ForeignKey('self', on_delete=models.CASCADE, related_name='subchannels', null=True, blank=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, blank=True)
+    group = models.ManyToManyField(Group)
 
     def get_all_subchannels(self):
         """
@@ -57,3 +57,7 @@ class Channel(models.Model):
             return contents.aggregate(models.Avg('rating'))['rating__avg']
         else:
             return None
+
+class ChannelGroup(models.Model):
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)

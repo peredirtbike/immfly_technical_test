@@ -20,9 +20,6 @@ from immfly_content_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('channels/', views.ChannelList.as_view(), name='channel-list'),
-    path('subchannels/', views.SubchannelList.as_view(), name='subchannel-list'),
-    path('content/', views.ContentList.as_view(), name='content-list'),
-    path('metadata/', views.MetadataList.as_view(), name='metadata-list'),
-    path('file/', views.FileList.as_view(), name='file-list'),
+
 
 ]

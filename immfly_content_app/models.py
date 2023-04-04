@@ -1,27 +1,6 @@
 from django.db import models
 from .validators import validate_file_extension
 
-class File(models.Model):
-    FILE_CHOICES = (
-        ('video', 'Video'),
-        ('pdf', 'PDF'),
-        ('text', 'Text'),
-    )
-    file = models.FileField(upload_to='files/', validators=[validate_file_extension])
-    file_type = models.CharField(max_length=5, choices=FILE_CHOICES)
-
-class Metadata(models.Model):
-    description = models.TextField()
-    author = models.CharField(max_length=100)
-    genre = models.CharField(max_length=100)
-
-class Content(models.Model):
-    file = models.OneToOneField(File, on_delete=models.CASCADE)
-    metadata = models.OneToOneField(Metadata, on_delete=models.CASCADE)
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
-    channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='contents')
-
-
 class Group(models.Model):
     name = models.CharField(max_length=50)
 
@@ -61,6 +40,26 @@ class Channel(models.Model):
             return contents.aggregate(models.Avg('rating'))['rating__avg']
         else:
             return None
+
+class File(models.Model):
+    FILE_CHOICES = (
+        ('video', 'Video'),
+        ('pdf', 'PDF'),
+        ('text', 'Text'),
+    )
+    file = models.FileField(upload_to='files/', validators=[validate_file_extension])
+    file_type = models.CharField(max_length=5, choices=FILE_CHOICES)
+
+class Metadata(models.Model):
+    description = models.TextField()
+    author = models.CharField(max_length=100)
+    genre = models.CharField(max_length=100)
+
+class Content(models.Model):
+    file = models.OneToOneField(File, on_delete=models.CASCADE)
+    metadata = models.OneToOneField(Metadata, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='contents', null=True, default=None)
 
 class ChannelGroup(models.Model):
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)

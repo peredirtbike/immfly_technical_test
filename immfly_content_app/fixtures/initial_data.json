@@ -1,0 +1,169 @@
+[
+    {
+      "model": "immfly_content_app.group",
+      "pk": 1,
+      "fields": {
+        "name": "Group A"
+      }
+    },
+    {
+      "model": "immfly_content_app.group",
+      "pk": 2,
+      "fields": {
+        "name": "Group B"
+      }
+    },
+    {
+      "model": "immfly_content_app.channel",
+      "pk": 1,
+      "fields": {
+        "title": "Movies",
+        "language": "English",
+        "image": "channel1.jpg",
+        "parent_channel": null,
+        "group": [1, 2]
+      }
+    },
+            {
+            "model": "immfly_content_app.channel",
+            "pk": 3,
+            "fields": {
+                "title": "Horror movies",
+                "language": "English",
+                "image": "channel1.jpg",
+                "parent_channel": 1,
+                "group": [1, 2]
+            }
+            },
+
+                    {
+                        "model": "immfly_content_app.file",
+                        "pk": 3,
+                        "fields": {
+                        "file": "smile.jpg",
+                        "file_type": "video"
+                        }
+                    },
+
+                    {
+                        "model": "immfly_content_app.metadata",
+                        "pk": 3,
+                        "fields": {
+                          "description": "After witnessing a strange and traumatic incident with a patient, a psychiatrist becomes increasingly convinced that she is being threatened by a strange entity.",
+                          "author": "Parker Finn",
+                          "genre": "Horror"
+                        }
+                      },
+
+                      {
+                        "model": "immfly_content_app.content",
+                        "pk": 3,
+                        "fields": {
+                          "file": 3,
+                          "metadata": 3,
+                          "rating": "3.20",
+                          "channel": 3
+                        }
+                      },
+        {
+        "model": "immfly_content_app.channel",
+        "pk": 4,
+        "fields": {
+            "title": "Comedy movies",
+            "language": "English",
+            "image": "channel1.jpg",
+            "parent_channel": 1,
+            "group": [1, 2]
+        }
+        },
+    {
+      "model": "immfly_content_app.channel",
+      "pk": 2,
+      "fields": {
+        "title": "TV Series",
+        "language": "Spanish",
+        "image": "channel2.jpg",
+        "parent_channel": null,
+        "group": [1]
+      }
+    },
+
+    {
+      "model": "immfly_content_app.file",
+      "pk": 1,
+      "fields": {
+        "file": "file1.pdf",
+        "file_type": "pdf"
+      }
+    },
+    {
+      "model": "immfly_content_app.file",
+      "pk": 2,
+      "fields": {
+        "file": "file2.mp4",
+        "file_type": "video"
+      }
+    },
+    {
+      "model": "immfly_content_app.metadata",
+      "pk": 1,
+      "fields": {
+        "description": "Metadata for file1.pdf",
+        "author": "John Doe",
+        "genre": "Science Fiction"
+      }
+    },
+    {
+      "model": "immfly_content_app.metadata",
+      "pk": 2,
+      "fields": {
+        "description": "Metadata for file2.mp4",
+        "author": "Jane Smith",
+        "genre": "Documentary"
+      }
+    },
+    {
+      "model": "immfly_content_app.content",
+      "pk": 1,
+      "fields": {
+        "file": 1,
+        "metadata": 1,
+        "rating": "4.50",
+        "channel": 1
+      }
+    },
+    {
+      "model": "immfly_content_app.content",
+      "pk": 2,
+      "fields": {
+        "file": 2,
+        "metadata": 2,
+        "rating": "3.20",
+        "channel": 2
+      }
+    },
+    {
+      "model": "immfly_content_app.channelgroup",
+      "pk": 1,
+      "fields": {
+        "channel": 1,
+        "group": 1
+      }
+    },
+    {
+      "model": "immfly_content_app.channelgroup",
+      "pk": 2,
+      "fields": {
+        "channel": 1,
+        "group": 2
+      }
+    },
+    {
+      "model": "immfly_content_app.channelgroup",
+      "pk": 3,
+      "fields": {
+        "channel": 2,
+        "group": 1
+      }
+    }
+  ]

@@ -1,30 +1,19 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import Channel
-from .serializers import ChannelSerializer
+from rest_framework.response import Response
+from .models import Channel, Content
+from .serializers import ChannelSerializer, ContentSerializer
 from django.views.generic import ListView, DetailView
 
 
 # Create your views here.
 
 
-class ChannelListView(ListView):
-    model = Channel
-    template_name = 'channel_list.html'
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(parent_channel__isnull=True)
-        return queryset
 
-class ChannelDetailView(DetailView):
-    model = Channel
-    template_name = 'channel_detail.html'
+class ChannelList(generics.ListAPIView):
+    queryset = Channel.objects.filter(parent_channel=None)
+    serializer_class = ChannelSerializer
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        channel = self.object
-        if channel.subchannels.exists():
-            context['subchannels'] = channel.subchannels.all()
-        else:
-            context['contents'] = channel.contents.all()
-        return context
+class ContentList(generics.ListAPIView):
+    queryset = Content.objects.all()
+    serializer_class = ContentSerializer

@@ -16,12 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from immfly_content_app import views
-from immfly_content_app.views import ChannelListView, ChannelDetailView
+from immfly_content_app.views import ChannelList, ContentList
 
 
 urlpatterns = [
-    path('', ChannelListView.as_view(), name='channel-list'),
-    path('channels/<int:pk>/', ChannelDetailView.as_view(), name='channel-detail'),
-
+    path('channels/', ChannelList.as_view(), name='channels'),
+    path('contents/', ContentList.as_view(), name='contents'),
 
 ]

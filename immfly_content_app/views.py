@@ -11,6 +11,10 @@ from django.views.generic import ListView, DetailView
 class ChannelListView(ListView):
     model = Channel
     template_name = 'channel_list.html'
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(parent_channel__isnull=True)
+        return queryset
 
 class ChannelDetailView(DetailView):
     model = Channel

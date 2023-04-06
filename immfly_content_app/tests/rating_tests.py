@@ -1,5 +1,10 @@
 from django.test import TestCase
 from immfly_content_app.models import Channel, Content, File, Metadata
+from immfly_content_app.validators import validate_file_extension
+from unittest.mock import Mock
+from django.core.exceptions import ValidationError
+
+
 
 
 class ChannelRatingAlgorithmTestCase(TestCase):
@@ -20,6 +25,8 @@ class ChannelRatingAlgorithmTestCase(TestCase):
         self.channel3 = Channel.objects.create(title='Channel 3')
         self.content3 = Content.objects.create(file=self.file3, metadata=self.metadata3, channel=self.channel1, rating=7)
         self.content4 = Content.objects.create(file=self.file4, metadata=self.metadata4, channel=self.channel4, rating=8.0)
+        self.file4 = File.objects.create(file='test_file4.sgv', file_type='video')
+
 
     def test_channel_rating_with_no_subchannels(self):
         expected_rating = (self.content1.rating + self.content2.rating) / 2
@@ -35,4 +42,18 @@ class ChannelRatingAlgorithmTestCase(TestCase):
     def test_channel_rating_with_only_one_content(self):
         expected_rating = (self.content4.rating)
         self.assertAlmostEqual(float(self.channel4.get_rating()), expected_rating, places=5)
+    
+    def test_valid_extension(self):
+        mock_file = Mock()
+        mock_file.name = 'test_file.mp4'
+        try:
+            validate_file_extension(mock_file)
+        except ValidationError:
+            self.fail('validate_file_extension() raised ValidationError unexpectedly.')
 
+    def test_invalid_extension(self):
+        mock_file = Mock()
+        mock_file.name = 'test_file.docx'
+        # Call the validator with the mock file and check that it raises a ValidationError
+        with self.assertRaises(ValidationError):
+            validate_file_extension(mock_file)

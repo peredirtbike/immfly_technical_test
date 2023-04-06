@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Channel, Content
 
 
-
 class ChannelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Channel

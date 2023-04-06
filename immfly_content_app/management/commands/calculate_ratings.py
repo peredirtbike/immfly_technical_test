@@ -12,7 +12,7 @@ class Command(BaseCommand):
         for channel in channels:
             rating = channel.get_rating()
             if rating is not None:
-                ratings.append((channel.title, rating))
+                ratings.append((channel.title, round(rating, 2)))
         ratings.sort(key=lambda x: x[1], reverse=True)
         with open('ratings.csv', 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)

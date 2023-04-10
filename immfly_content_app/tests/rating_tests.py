@@ -5,8 +5,6 @@ from unittest.mock import Mock
 from django.core.exceptions import ValidationError
 
 
-
-
 class ChannelRatingAlgorithmTestCase(TestCase):
     def setUp(self):        
         self.channel1 = Channel.objects.create(title='Channel 1')

@@ -1,32 +1,40 @@
-from django.shortcuts import get_object_or_404
-from rest_framework import generics
-from rest_framework.response import Response
-from .models import Channel, Content
-from .serializers import ChannelSerializer, ContentSerializer
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, views
+from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.views import APIView
 from drf_yasg import openapi
 
+from .models import Channel, Content
+from .serializers import ChannelSerializer, ContentSerializer
 
-class WelcomeView(APIView):
+
+class WelcomeView(views.APIView):
     @swagger_auto_schema(
         operation_summary="Returns a welcome message",
-        responses={200: openapi.Response(description="Welcome message", schema=openapi.Schema(type="object", properties={"message": openapi.Schema(type="string")}))}
+        responses={
+            200: openapi.Response(
+                description="Welcome message", 
+                schema=openapi.Schema(
+                    type="object", 
+                    properties={"message": openapi.Schema(type="string")}
+                )
+            )
+        }
     )
     def get(self, request):
-        message = {'message': 'Welcome to my API! Read the documentation on /docs to get success!'}
+        message = {"message": "Welcome to my API! Read the documentation on /docs to get success!"}
         return Response(message)
-        
+
 
 class ChannelList(generics.ListAPIView):
     queryset = Channel.objects.filter(parent_channel=None)
     serializer_class = ChannelSerializer
 
     @swagger_auto_schema(
-        operation_description="List of channels",
         operation_summary="Returns a list of channels",
-         responses={
+        operation_description="List of channels",
+        responses={
             200: openapi.Response(
                 description="Successful response",
                 schema=ChannelSerializer(many=True)
@@ -36,6 +44,7 @@ class ChannelList(generics.ListAPIView):
     )
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
+
 
 class ChannelDetail(generics.RetrieveAPIView):
     queryset = Channel.objects.all()
@@ -59,12 +68,6 @@ class ChannelDetail(generics.RetrieveAPIView):
 class SubchannelList(generics.ListAPIView):
     serializer_class = ChannelSerializer
 
-
-    def get_queryset(self):
-        channel_id = self.kwargs['channel_id']
-        channel = Channel.objects.get(id=channel_id)
-        return channel.get_all_subchannels()
-    
     @swagger_auto_schema(
         operation_summary="List subchannels",
         operation_description="List all subchannels of a parent channel.",
@@ -77,24 +80,19 @@ class SubchannelList(generics.ListAPIView):
         }
     )
     def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
-
+        channel_id = self.kwargs["channel_id"]
+        channel = get_object_or_404(Channel, id=channel_id)
+        subchannels = channel.get_all_subchannels()
+        serializer = ChannelSerializer(subchannels, many=True)
+        return Response(serializer.data)
 
 
 class ContentList(generics.ListAPIView):
     serializer_class = ContentSerializer
 
-    def get_queryset(self):
-        channel_id = self.kwargs.get('channel_id')
-        if channel_id:
-            channel = Channel.objects.get(id=channel_id)
-            return channel.get_all_contents()
-        else:
-            return Content.objects.all()
-
     @swagger_auto_schema(
-        operation_description="List of contents",
         operation_summary="Returns a list of contents",
+        operation_description="List of contents",
         responses={
             200: openapi.Response(
                 description="Successful response",
@@ -104,7 +102,15 @@ class ContentList(generics.ListAPIView):
         }
     )
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        channel_id = self.kwargs.get("channel_id")
+        if channel_id:
+            channel = get_object_or_404(Channel, id=channel_id)
+            queryset = channel.get_all_contents()
+        else:
+            queryset = Content.objects.all()
+
+        serializer = ContentSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 class ContentDetail(generics.RetrieveAPIView):
     queryset = Content.objects.all()

@@ -15,8 +15,8 @@ class ChannelSerializer(serializers.ModelSerializer):
         model = Channel
         fields = '__all__'
 
+
 class ContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = '__all__'
-

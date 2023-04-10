@@ -5,6 +5,9 @@ class Group(models.Model):
     name = models.CharField(max_length=50)
 
 class Channel(models.Model):
+    """
+    Model representing a channel
+    """
     title = models.CharField(max_length=100)
     language = models.CharField(max_length=50)
     image = models.ImageField(upload_to='channel_images/')
@@ -42,6 +45,9 @@ class Channel(models.Model):
             return None
 
 class File(models.Model):
+    """
+    Model representing a file that can be part of a content.
+    """
     FILE_CHOICES = (
         ('video', 'Video'),
         ('pdf', 'PDF'),
@@ -51,16 +57,25 @@ class File(models.Model):
     file_type = models.CharField(max_length=5, choices=FILE_CHOICES)
 
 class Metadata(models.Model):
+    """
+    Model representing metadata for a content.
+    """
     description = models.TextField()
     author = models.CharField(max_length=100)
     genre = models.CharField(max_length=100)
 
 class Content(models.Model):
+    """
+    Model representing a content that can belong to a channel.
+    """
     file = models.OneToOneField(File, on_delete=models.CASCADE)
     metadata = models.OneToOneField(Metadata, on_delete=models.CASCADE)
     rating = models.DecimalField(max_digits=3, decimal_places=2)
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE, related_name='contents', null=True, default=None)
 
 class ChannelGroup(models.Model):
+    """
+    Model representing the relationship between channels and groups.
+    """
     channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)

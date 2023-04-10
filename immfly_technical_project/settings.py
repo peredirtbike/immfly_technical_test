@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'django_seed',
+    'drf_yasg',
     'rest_framework_swagger'
 ]
 

@@ -11,7 +11,7 @@ This is my solution to the problem at hand. Here's a brief overview of what my s
 
 To install and run the solution, follow these steps:
 
-1. Clone the repository to your local machine (git clone "url").
+1. Clone the repository to your local machine (git clone https://github.com/peredirtbike/immfly_technical_test.git).
 2. Install the required dependencies using pip: `pip install -r requirements.txt`.
 3. Run the Django development server: `python manage.py runserver`.
     3.1 If you have installed Docker, you can build an image with: `docker build -t immfly_api .`

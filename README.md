@@ -12,9 +12,10 @@ This is my solution to the problem at hand. Here's a brief overview of what my s
 To install and run the solution, follow these steps:
 
 1. Clone the repository to your local machine (git clone https://github.com/peredirtbike/immfly_technical_test.git).
-2. Install the required dependencies using pip: `pip install -r requirements.txt`.
-3. Run the Django development server: `python manage.py runserver`.
-4. Use a web browser or API client to interact with the REST API.
+2. Copy the .env file on the root dir of the project.
+3. Install the required dependencies using pip: `pip install -r requirements.txt`.
+4. Run the Django development server: `python manage.py runserver`.
+5. Use a web browser or API client to interact with the REST API.
 
 If you want to run it through Docker:
 

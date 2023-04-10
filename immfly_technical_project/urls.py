@@ -17,9 +17,19 @@ from django.contrib import admin
 from django.urls import path
 from immfly_content_app import views
 from immfly_content_app.views import ChannelList, ContentList, SubchannelList, ChannelDetail, ContentDetail
+from rest_framework.schemas import get_schema_view
+from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
+schema_view = get_schema_view(title='API documentation')
 
 
 urlpatterns = [
+
+    path('', schema_view),
     path('channels/', ChannelList.as_view(), name='channels'),
     path('channels/<int:pk>/', ChannelDetail.as_view(), name='channel-detail'),
     path('channels/<int:channel_id>/subchannels/', SubchannelList.as_view(), name='subchannels'),
@@ -30,4 +40,4 @@ urlpatterns = [
 
     
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -47,7 +47,7 @@ class File(models.Model):
         ('pdf', 'PDF'),
         ('text', 'Text'),
     )
-    file = models.FileField(upload_to='files/', validators=[validate_file_extension])
+    file = models.FileField(upload_to='content_files/', validators=[validate_file_extension])
     file_type = models.CharField(max_length=5, choices=FILE_CHOICES)
 
 class Metadata(models.Model):

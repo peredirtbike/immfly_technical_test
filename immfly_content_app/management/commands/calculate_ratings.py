@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from immfly_content_app.models import Channel
+import os
 
 import csv
 
@@ -19,3 +20,4 @@ class Command(BaseCommand):
             writer.writerow(['Channel Title', 'Average Rating'])
             for rating in ratings:
                 writer.writerow([rating[0], rating[1]])
+        print(os.getcwd())

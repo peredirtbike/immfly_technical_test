@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+  ratings:
+    build: .
+    command: sh -c "python manage.py calculate_ratings && ls -la /code/"
+  tests:
+    build: .
+    command: python manage.py test immfly_content_app.tests.rating_tests

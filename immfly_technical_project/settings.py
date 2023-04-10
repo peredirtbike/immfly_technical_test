@@ -1,5 +1,7 @@
 
 from decouple import config
+import os
+
 
 
 """
@@ -44,7 +46,8 @@ INSTALLED_APPS = [
     'immfly_content_app',
     'django_extensions',
     'rest_framework',
-    'django_seed'
+    'django_seed',
+    'rest_framework_swagger'
 ]
 
 MIDDLEWARE = [
@@ -123,10 +126,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL= '/media/'
-MEDIA_ROOT= BASE_DIR / 'uploads'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

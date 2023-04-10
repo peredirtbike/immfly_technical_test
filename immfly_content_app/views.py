@@ -55,6 +55,13 @@ class ChannelDetail(generics.RetrieveAPIView):
 
 class SubchannelList(generics.ListAPIView):
     serializer_class = ChannelSerializer
+
+
+    def get_queryset(self):
+        channel_id = self.kwargs['channel_id']
+        channel = Channel.objects.get(id=channel_id)
+        return channel.get_all_subchannels()
+    
     @swagger_auto_schema(
         operation_summary="List subchannels",
         operation_description="List all subchannels of a parent channel.",
@@ -66,11 +73,8 @@ class SubchannelList(generics.ListAPIView):
             404: "Parent channel not found",
         }
     )
-
-    def get_queryset(self):
-        channel_id = self.kwargs['channel_id']
-        channel = Channel.objects.get(id=channel_id)
-        return channel.get_all_subchannels()
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 
 

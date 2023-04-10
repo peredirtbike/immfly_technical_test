@@ -9,9 +9,6 @@ from rest_framework.views import APIView
 from drf_yasg import openapi
 
 
-
-
-
 class WelcomeView(APIView):
     @swagger_auto_schema(
         operation_summary="Returns a welcome message",
@@ -112,6 +109,7 @@ class ContentList(generics.ListAPIView):
 class ContentDetail(generics.RetrieveAPIView):
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
+    
     @swagger_auto_schema(
         operation_summary="Retrieve a single content",
         operation_description="Retrieve a single content instance by specifying its ID in the URL.",

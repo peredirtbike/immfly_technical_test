@@ -29,7 +29,13 @@ class ChannelList(generics.ListAPIView):
     @swagger_auto_schema(
         operation_description="List of channels",
         operation_summary="Returns a list of channels",
-        responses={200: ChannelSerializer(many=True)}
+         responses={
+            200: openapi.Response(
+                description="Successful response",
+                schema=ChannelSerializer(many=True)
+            ),
+            404: "Channel not found",
+        }
     )
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
@@ -70,7 +76,7 @@ class SubchannelList(generics.ListAPIView):
                 description="Successful response",
                 schema=ChannelSerializer(many=True)
             ),
-            404: "Parent channel not found",
+            404: "Subchannel not found",
         }
     )
     def get(self, request, *args, **kwargs):
@@ -81,14 +87,6 @@ class SubchannelList(generics.ListAPIView):
 class ContentList(generics.ListAPIView):
     serializer_class = ContentSerializer
 
-    @swagger_auto_schema(
-        operation_description="List of contents",
-        operation_summary="Returns a list of contents",
-        responses={200: ContentSerializer(many=True)}
-    )
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
     def get_queryset(self):
         channel_id = self.kwargs.get('channel_id')
         if channel_id:
@@ -96,6 +94,20 @@ class ContentList(generics.ListAPIView):
             return channel.get_all_contents()
         else:
             return Content.objects.all()
+
+    @swagger_auto_schema(
+        operation_description="List of contents",
+        operation_summary="Returns a list of contents",
+        responses={
+            200: openapi.Response(
+                description="Successful response",
+                schema=ContentSerializer(many=True)
+            ),
+            404: "Content not found",
+        }
+    )
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
 class ContentDetail(generics.RetrieveAPIView):
     queryset = Content.objects.all()

@@ -9,6 +9,24 @@ This is my solution to the problem at hand. Here's a brief overview of what my s
 
 ## Installation
 
+-> Create Virtual environment
+
+```bash
+# Windows
+py -3 -m venv env
+# Linux and Mac
+python3 -m venv env
+```
+
+-> Activate environment
+
+```bash
+# Windows
+.\env\Scripts\activate
+# Linux and Mac
+source env/bin/activate
+```
+
 To install and run the solution, follow these steps:
 
 1. Clone the repository to your local machine (git clone `https://github.com/peredirtbike/immfly_technical_test.git`).
